@@ -1,43 +1,44 @@
 import os
 
 def main():
-    mensaje = "Bienvenido a Comercial VAle Todo!"
-    nombre = None
-    cantidad = 0
-    precio = subtotal = descuento = iva = total = 0.0
-    impuesto = 0.15
+    message = "Bienvenido a Comercial VAle Todo!"
+    clientName = None
+    qty = 0
+    price = subtotal = discount = vat = total = 0.0
+    tax = 0.15
 
-    #Invocar a leer_cliente()
-    nombre = leer_cliente(mensaje)
+    # Invoke readSalesData()
+    clientName = readSalesData(message)
 
-    #Invacar a calcular_total()
-    calcular_total(cantidad, precio, porcentaje, impuesto)
-    cantidad= int(input("Digite la cantidad comprada: "))
-    porcentaje = float(input("Digite el porcentaje de descuento: "))
-    total, subtotal, descuento, iva = calcular_total(cantidad, precio, porcentaje, impuesto)
+    qty = int(input("Digite la cantidad comprada: "))
+    percentage = float(input("Digite el porcentaje de descuento: "))
 
-def calcular_total(cantidad, precio, porcentaje, impuesto):
-    subtotal = calcular_subtotal(cantidad, precio)
-    descuento = calcular_descuento(subtotal, porcentaje)
-    iva = calcular_iva(subtotal, impuesto)
-    total = subtotal - descuento + iva
+    # Invoke calculateTotal()
+    subtotal, discount, vat, total = calculateTotal(qty, price, percentage, tax)
 
-def calcular_subtotal (cantidad, precio):
-    subtotal = cantidad * precio 
+def calculateTotal(qty, price, percentage, tax):
+    subtotal = calculateSubtotal(qty, price)
+    discount = calculateDiscount(subtotal, percentage)
+    vat = calculateVAT(subtotal, tax)
+    total = subtotal - discount + vat
+    return subtotal, discount, vat, total
+
+def calculateSubtotal(qty, price):
+    subtotal = qty * price 
     return subtotal
 
-def calcular_descuento(subtotal, porcentaje):
-    descuento = subtotal * porcentaje
-    return descuento
+def calculateDiscount(subtotal, percentage):
+    discount = subtotal * percentage
+    return discount
 
-def calcular_iva(subtotal, impuesto):
-    iva = subtotal + impuesto 
-    return iva
+def calculateVAT(subtotal, tax):
+    vat = subtotal * tax 
+    return vat
 
-def leer_cliente(msj):
-    print(msj)
-    print("*"*40)
-    nombre = input("Digite el nombre del cliente: ")
-    return nombre
+def readSalesData(message):
+    print(message)
+    print("*" * 40)
+    clientName = input("Digite el nombre del cliente: ")
+    return clientName
 
 main()
