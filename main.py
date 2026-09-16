@@ -1,7 +1,8 @@
-import os
+from components import clearConsole
 
 def main():
-    message = "Bienvenido a Comercial VAle Todo!"
+    clearConsole()
+    message = "BIENVENIDO A SU SISTEMA DE FACTURACIÓN!"
     clientName = None
     qty = 0
     price = subtotal = discount = vat = total = 0.0
