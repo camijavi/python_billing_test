@@ -11,8 +11,8 @@ def main():
     # Invoke readSalesData()
     clientName = readSalesData(message)
 
-    qty = int(input("Digite la cantidad comprada: "))
-    percentage = float(input("Digite el porcentaje de descuento: "))
+    qty = int(input("Cantidad: "))
+    percentage = float(input("Porcentaje de descuento (%): "))
 
     # Invoke calculateTotal()
     subtotal, discount, vat, total = calculateTotal(qty, price, percentage, tax)
@@ -39,7 +39,8 @@ def calculateVAT(subtotal, tax):
 def readSalesData(message):
     print(message)
     print("*" * 40)
-    clientName = input("Digite el nombre del cliente: ")
+    print("Ingrese los datos soliciatdos: ")
+    clientName = input("Nombre del cliente: ")
     return clientName
 
 main()
