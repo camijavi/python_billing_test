@@ -39,7 +39,7 @@ def calculateVAT(subtotal, tax):
 def readSalesData(message):
     print(message)
     print("*" * 40)
-    print("Ingrese los datos soliciatdos: ")
+    print("Ingrese los datos solicitados: ")
     clientName = input("Nombre del cliente: ")
     return clientName
 
