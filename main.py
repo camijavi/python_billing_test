@@ -52,7 +52,7 @@ def readSalesData(message):
 
     return clientName, productCount, productsTextBuffer, totalProducts
 
-def showBill(clientName, productCount, products_text_buffer, totalProducts, percentage, discount, tax, vat, total):
+def showBill(clientName, productCount, productsTextBuffer, totalProducts, percentage, discount, tax, vat, total):
     print("\n" + "=" * 65)
     print("                 FACTURA DE VENTA                 ")
     print("=" * 65)
@@ -63,7 +63,7 @@ def showBill(clientName, productCount, products_text_buffer, totalProducts, perc
     
     # Procesamos la cadena de texto línea por línea sin listas ni .split()
     line = ""
-    for char in products_text_buffer:
+    for char in productsTextBuffer:
         if char == "\n":
             if line:
                 # Extraemos los campos buscando el delimitador ';'
@@ -96,7 +96,7 @@ def main():
     tax = 0.15
 
     # 1. Módulo readSalesData()
-    clientName, productCount, products_text_buffer, totalProducts = readSalesData(message)
+    clientName, productCount, productsTextBuffer, totalProducts = readSalesData(message)
 
     # Porcentaje de descuento global
     percentage = float(input("\nIngrese el porcentaje de descuento (%): "))
@@ -106,7 +106,7 @@ def main():
 
     # 3. Módulo showBill()
     showBill(
-        clientName, productCount, products_text_buffer,
+        clientName, productCount, productsTextBuffer,
         totalProducts, percentage, discount, tax, vat, total
     )
 
