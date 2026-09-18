@@ -1,58 +1,95 @@
 from components import clearConsole
 
 def readProductCount():
+    """
+    Módulo secundario de readSalesData()
+    Retorna: productCount (int)
+    """
     productCount = int(input("¿Cuántos productos desea ingresar?: "))
     return productCount
 
 def calculateSubtotal(qty, price):
+    """
+    Módulo para calcular el subtotal de un producto individual
+    """
     return qty * price
 
-def calculateTotalProducts(totalProducts, subtotal):
+def calcular_total_productos(totalProducts, subtotal):
+    """
+    CAMBIO #1: Módulo para acumular el subtotal de cada producto en el total general.
+    ¡Sin utilizar listas ni arreglos!
+    """
     return totalProducts + subtotal
 
-def calculateParticipationPercentage(subtotal, totalProducts):
+# Alias por compatibilidad
+calculateTotalProducts = calcular_total_productos
+
+def calcular_porcentaje_participacion(subtotal, totalProducts):
+    """
+    CAMBIO #2: Módulo para calcular qué porcentaje del subtotal total representa cada producto.
+    """
     if totalProducts > 0:
         return (subtotal / totalProducts) * 100
     return 0.0
 
+# Alias por compatibilidad
+calculateParticipationPercentage = calcular_porcentaje_participacion
+
 def calculateDiscount(totalProducts, percentage):
-    discRate = percentage / 100 if percentage > 1 else percentage
-    return totalProducts * discRate
+    """
+    Módulo para calcular el descuento general
+    """
+    disc_rate = percentage / 100 if percentage > 1 else percentage
+    return totalProducts * disc_rate
 
 def calculateVAT(totalProducts, tax):
+    """
+    Módulo para calcular el IVA
+    """
     return totalProducts * tax
 
-def calculateTotal (totalProducts, percentage, tax):
+def calculateTotal(totalProducts, percentage, tax):
+    """
+    Módulo coordinador de totales (descuento, IVA y total neto)
+    """
     discount = calculateDiscount(totalProducts, percentage)
     vat = calculateVAT(totalProducts - discount, tax)
     total = totalProducts - discount + vat
     return discount, vat, total
 
 def readSalesData(message):
+    """
+    Módulo principal de lectura.
+    Recopila los datos de los productos utilizando variables acumuladoras y texto sin usar listas [].
+    """
     print(message)
-    print("+"*50)
+    print("*" * 50)
     clientName = input("Nombre del cliente: ")
-
+    
     productCount = readProductCount()
-
-    #variables acumuladoras 
+    
+    # Variables acumuladoras simples (sin listas ni arreglos)
     totalProducts = 0.0
-    productsTextBuffer = "" 
-
-    for i in range (1, productCount + 1):
+    products_text_buffer = ""  # Cadena de texto para almacenar el detalle
+    
+    for i in range(1, productCount + 1):
         print(f"\n--- Producto #{i} de {productCount} ---")
         name = input("Nombre del producto: ")
         q = int(input("Cantidad: "))
         p = float(input("Precio unitario: "))
-
+        
         sub = calculateSubtotal(q, p)
-        totalProducts = calculateTotalProducts(totalProducts, sub)
-
-        productsTextBuffer += f"{name};{q};{p:.2f};{sub:.2f}\n"
-
-    return clientName, productCount, productsTextBuffer, totalProducts
+        totalProducts = calcular_total_productos(totalProducts, sub)
+        
+        # Almacenamos en formato texto separado por ';'
+        products_text_buffer += f"{name};{q};{p:.2f};{sub:.2f}\n"
+        
+    return clientName, productCount, products_text_buffer, totalProducts
 
 def showBill(clientName, productCount, products_text_buffer, totalProducts, percentage, discount, tax, vat, total):
+    """
+    Módulo para mostrar la factura procesando el texto sin usar listas [].
+    """
     print("\n" + "=" * 65)
     print("                 FACTURA DE VENTA                 ")
     print("=" * 65)
@@ -76,7 +113,7 @@ def showBill(clientName, productCount, products_text_buffer, totalProducts, perc
                 p_price = float(line[p2+1:p3])
                 p_sub = float(line[p3+1:])
                 
-                part_pct = calculateParticipationPercentage(p_sub, totalProducts)
+                part_pct = calcular_porcentaje_participacion(p_sub, totalProducts)
                 print(f"{p_name:<20} {p_qty:<8} ${p_price:<9.2f} ${p_sub:<9.2f} {part_pct:<7.2f}%")
                 line = ""
         else:
